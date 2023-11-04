@@ -30,6 +30,7 @@ class NERDataset(torch.utils.data.Dataset):
             'I-nat',    # Natural Phenomenon (Inside)
         ]
         self.tag2label = {tag: index for index, tag in enumerate(self.label2tag)}
+        self.num_classes = len(self.label2tag)
 
         self.csv_filepath = csv_filepath
 
