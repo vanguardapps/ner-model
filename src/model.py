@@ -35,10 +35,8 @@ class WordWindowClassifier(nn.Module):
         batch_outputs = self.relu(batch_scores)
         return batch_outputs.squeeze(2)
 
-    def predict(self, raw_sentences, word2index):
+    def predict_raw(self, raw_sentences, word2index):
         pad_tokens = [word2index['<pad>']] * self.window_size
         padded_inputs = [torch.LongTensor(pad_tokens + tokenized_sentence + pad_tokens) for tokenized_sentence in tokenize_sentences(split_sentences(raw_sentences), word2index=word2index)]
-        print('padded_inputs', padded_inputs)
         inputs = torch.nn.utils.rnn.pad_sequence(padded_inputs, batch_first=True, padding_value=word2index['<pad>'])
-        print('inputs', inputs)
         return self.forward(inputs)
